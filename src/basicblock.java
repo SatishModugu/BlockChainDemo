@@ -6,9 +6,16 @@ public class basicblock {
 	private String blockData; 
 	private long time;
 	
-	public basicblock(String blockData,String inputHash ) {
+	public basicblock(String blockData,String inputHash )
+	{
 		this.blockData = blockData;
 		this.inputHash = inputHash;
 		this.time = new Date().getTime();
+		this.outputHash = hashCalculater();
+	}
+	
+	public String hashCalculater() {
+		String hashSHA256 = hashing.hashSha256(inputHash +Long.toString(time) +blockData );
+		return hashSHA256;
 	}
 }
