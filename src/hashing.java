@@ -1,4 +1,5 @@
 import java.security.MessageDigest;
+import com.google.gson.GsonBuilder;
 public class hashing {
 	
 		public static String hashSha256(String inputdata){		
@@ -16,5 +17,15 @@ public class hashing {
 			catch(Exception e) {
 				throw new RuntimeException(e);
 			}
-		}	
+		}
+		//Converting into JSON format
+		public static String JsonBuilder(Object obj) {
+			return new GsonBuilder().setPrettyPrinting().create().toJson(obj);
+		}
+		
+		//This function returns proof of work difficulty string target, to compare to hash. eg difficulty of 5 will return "00000"  
+		public static String proofOfWorkString(int proofInt) {
+			return new String(new char[proofInt]).replace('\0', '0');
+		}
+		
 	}
