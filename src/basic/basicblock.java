@@ -11,17 +11,17 @@ public class basicblock {
 	public ArrayList<TransferHandler> transfers = new ArrayList<TransferHandler>();
 	private long time;
 	private int uniNounce;
+	public String mRoot;
 	
-	public basicblock(String blockData,String inputHash )
+	public basicblock(String inputHash )
 	{
-		this.blockData = blockData;
 		this.inputHash = inputHash;
 		this.time = new Date().getTime();
 		this.outputHash = hashCalculater();
 	}
 	
 	public String hashCalculater() {
-		String hashSHA256 = hashing.hashSha256(inputHash +Long.toString(time) + Integer.toString(uniNounce) + blockData );
+		String hashSHA256 = hashing.hashSha256(inputHash +Long.toString(time) + Integer.toString(uniNounce) + mRoot );
 		return hashSHA256;
 	}
 	

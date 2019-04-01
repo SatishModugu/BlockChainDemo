@@ -30,7 +30,7 @@ public class Account {
 	}
 	public float accountBal() {
 		float totalBalance = 0;	
-        for (Map.Entry<String, OutputTransaction> item: MainApp.Unspent.entrySet()){
+        for (Map.Entry<String, OutputTransaction> item: MainApp.UnspentTxs.entrySet()){
         	OutputTransaction unspent = item.getValue();
             if(unspent.isValid(keyPub)) { //if output belongs to me ( if coins belong to me )
             	UnspentTxs.put(unspent.TransactionId,unspent); //add it to our list of unspent transactions.

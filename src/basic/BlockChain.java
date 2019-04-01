@@ -4,21 +4,25 @@ import com.google.gson.GsonBuilder;
 
 public class BlockChain {
 	public static ArrayList<basicblock> chainOfBlocks = new ArrayList<basicblock>();
+	
 	public static int PoWdiffi = 6;
 
 	public static void main(String[] args) 
 	{
-		System.out.println("Hii");
-		insertBlock(new basicblock("First block or genisis block", "0"));
-		System.out.println("Mined first block");
-
-		insertBlock(new basicblock("second block in the chain",chainOfBlocks.get(chainOfBlocks.size()-1).outputHash));
-		System.out.println("Mined Second Block");
-
-		insertBlock(new basicblock("Third block in the chain",chainOfBlocks.get(chainOfBlocks.size()-1).outputHash));
-		System.out.println("Mined third Block");
-		System.out.println("\nBlockchain is Valid: " + isChainValid());
-		
+		/*
+		 * System.out.println("Hii"); insertBlock(new
+		 * basicblock("First block or genisis block", "0"));
+		 * System.out.println("Mined first block");
+		 * 
+		 * insertBlock(new
+		 * basicblock("second block in the chain",chainOfBlocks.get(chainOfBlocks.size()
+		 * -1).outputHash)); System.out.println("Mined Second Block");
+		 * 
+		 * insertBlock(new
+		 * basicblock("Third block in the chain",chainOfBlocks.get(chainOfBlocks.size()-
+		 * 1).outputHash)); System.out.println("Mined third Block");
+		 * System.out.println("\nBlockchain is Valid: " + isChainValid());
+		 */
 		String blockchainJson = hashing.JsonBuilder(chainOfBlocks);
 		System.out.println("\nThe block chain: ");
 		System.out.println(blockchainJson);

@@ -55,7 +55,7 @@ public class TransferHandler {
 					
 			//gather transaction inputs (Make sure they are unspent):
 			for(InputTransaction i : TxInput) {
-				i.Unspent = MainApp.Unspent.get(i.transactionIdOp);
+				i.Unspent = MainApp.UnspentTxs.get(i.transactionIdOp);
 			}
 
 			//check if transaction is valid:
@@ -72,13 +72,13 @@ public class TransferHandler {
 					
 			//add outputs to Unspent list
 			for(OutputTransaction oT : TxOutput) {
-				MainApp.Unspent.put(oT.TransactionId , oT);
+				MainApp.UnspentTxs.put(oT.TransactionId , oT);
 			}
 			
 			//remove transaction inputs from UTXO lists as spent:
 			for(InputTransaction iT : TxInput) {
 				if(iT.Unspent == null) continue; //if Transaction can't be found skip it 
-				MainApp.Unspent.remove(iT.Unspent.TransactionId);
+				MainApp.UnspentTxs.remove(iT.Unspent.TransactionId);
 			}
 			
 			return true;
