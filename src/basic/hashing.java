@@ -1,4 +1,7 @@
+package basic;
 import java.security.MessageDigest;
+import java.security.*;
+import java.util.Base64;
 import com.google.gson.GsonBuilder;
 public class hashing {
 	
@@ -27,5 +30,37 @@ public class hashing {
 		public static String proofOfWorkString(int proofInt) {
 			return new String(new char[proofInt]).replace('\0', '0');
 		}
+		
+		public static String KeyToString(Key key) {
+			return Base64.getEncoder().encodeToString(key.getEncoded());
+		}
+		//Applies ECDSA Signature and returns the result ( as bytes ).
+				public static byte[] ECDSASigGenerator(PrivateKey KeyPriv, String inp) {
+				Signature ecdsa;
+				byte[] result = new byte[0];
+				try {
+					ecdsa = Signature.getInstance("ECDSA", "BC");
+					ecdsa.initSign(KeyPriv);
+					byte[] strByte = inp.getBytes();
+					ecdsa.update(strByte);
+					byte[] finalSig = ecdsa.sign();
+					result = finalSig;
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				return result;
+			}
+				
+				//Verifies a String signature 
+				public static boolean SigVerifyier(PublicKey KeyPub, String input, byte[] ecdsasig) {
+					try {
+						Signature verify = Signature.getInstance("ECDSA", "BC");
+						verify.initVerify(KeyPub);
+						verify.update(input.getBytes());
+						return verify.verify(ecdsasig);
+					}catch(Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
 		
 	}
