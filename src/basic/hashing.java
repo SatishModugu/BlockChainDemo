@@ -1,8 +1,11 @@
 package basic;
 import java.security.MessageDigest;
 import java.security.*;
+import java.util.ArrayList;
 import java.util.Base64;
 import com.google.gson.GsonBuilder;
+
+import transferApp.TransferHandler;
 public class hashing {
 	
 		public static String hashSha256(String inputdata){		
@@ -62,5 +65,25 @@ public class hashing {
 						throw new RuntimeException(e);
 					}
 				}
+				
+				//Tacks in array of transactions and returns a merkle root.
+				public static String merkleRootGenerator(ArrayList<TransferHandler> transfers) {
+						int c = transfers.size();
+						ArrayList<String> layerOfPrivTree = new ArrayList<String>();
+						for(TransferHandler transaction : transfers) {
+							layerOfPrivTree.add(transaction.txId);
+						}
+						ArrayList<String> newLayer = layerOfPrivTree;
+						while(c > 1) {
+							newLayer = new ArrayList<String>();
+							for(int i=1; i < layerOfPrivTree.size(); i++) {
+								newLayer.add(hashSha256(layerOfPrivTree.get(i-1) + layerOfPrivTree.get(i)));
+							}
+							c = newLayer.size();
+							layerOfPrivTree = newLayer;
+						}
+						String newMerkleRoot = (newLayer.size() == 1) ? newLayer.get(0) : "";
+						return newMerkleRoot;
+					}
 		
 	}

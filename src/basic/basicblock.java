@@ -1,10 +1,14 @@
 package basic;
+import java.util.ArrayList;
 import java.util.Date;
+
+import transferApp.TransferHandler;
 public class basicblock {
 
 	public 	String outputHash;
 	public  String inputHash;
-	private String blockData; 
+	private String blockData;
+	public ArrayList<TransferHandler> transfers = new ArrayList<TransferHandler>();
 	private long time;
 	private int uniNounce;
 	
@@ -29,5 +33,19 @@ public class basicblock {
 			outputHash = hashCalculater();
 		}
 		System.out.println("Output after block mining: " + outputHash);
+	}
+	//Add transactions to this block
+	public boolean addTransaction(TransferHandler transfer) {
+		//process transaction and check if valid, unless block is genesis block then ignore.
+		if(transfer == null) return false;		
+		if((inputHash != "0")) {
+			if((transfer.processTransaction() != true)) {
+				System.out.println("Problem in processtransaction. Transaction Denined.");
+				return false;
+			}
+		}
+		transfers.add(transfer);
+		System.out.println("Transaction is added to the Block");
+		return true;
 	}
 }
